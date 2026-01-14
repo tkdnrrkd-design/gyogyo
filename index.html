@@ -1,77 +1,131 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-
 <head>
     <meta charset="UTF-8">
-    <title>HTML Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 도서관 온라인</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using a common icon library for visuals -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-
 <body>
-    <p><h1>박주연</h1></p>
 
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <i class="fa-solid fa-book-open logo-icon"></i>
+                <h1>꿈을 키우는 도서관</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><button onclick="showSection('search')" id="nav-search" class="active">자료 검색</button></li>
+                    <li><button onclick="showSection('category')" id="nav-category">주제별 탐색</button></li>
+                    <li><button onclick="showSection('col')" id="nav-col">추천 도서</button></li>
+                    <li><button onclick="showSection('mypage')" id="nav-mypage">나의 서재</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<p>"학교도서관"이라 함은  <a href="https://www.daum.net/">
-다음학교도서관</a>고등학교 이하의 각급 학교(초등교육기관, 중등교육기관)에서 교사와 학생, 직원에게 도서관서비스를 제공하는 것을 주된 목적으로 하는 도서관을 말한다(도서관법 제2조 제6호).</p>
+    <main>
+        <!-- Menu 1: Boolean Search (도감 형식 -> 상세 검색) -->
+        <section id="search" class="content-section active">
+            <h2 class="section-title">자료 검색 (상세)</h2>
+            <div class="search-box">
+                <div class="input-group">
+                    <input type="text" id="term1" placeholder="검색어 1 (예: 역사)">
+                </div>
+                <div style="width: 100px;">
+                    <select id="operator">
+                        <option value="AND">AND (포함)</option>
+                        <option value="OR">OR (또는)</option>
+                        <option value="NOT">NOT (제외)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="term2" placeholder="검색어 2 (예: 만화)">
+                </div>
+                <button class="action-btn" onclick="runSearch()">검색하기</button>
+            </div>
 
+            <div id="searchStats" style="margin-bottom: 20px; color: #666;">
+                검색 조건을 입력하고 버튼을 눌러주세요.
+            </div>
+            <div id="resultArea" class="result-list">
+                <!-- Javascript will populate results here -->
+            </div>
+        </section>
 
-<p>말 그대로 <a href="http://www.tcpschool.com/html/html_basic_links">
-tcpschool</a>학교도서관으로 대학을 제외한 하위 교육기관에 속한 도서관들을 가리킨다. 학교 소속인 만큼 학생들이 주 이용자이므로 청소년이나 어린이를 위한 도서를 중점적으로 수집한다. 이외에도 그 학교와 관련된 자료[1]나 교직원들을 위한 자료를 따로 수집하기도 한다. 도서실로도 많이 불린다.</p>
+        <!-- Menu 2: Classification (분류) -->
+        <section id="category" class="content-section">
+            <h2 class="section-title">주제별 도서 탐색</h2>
+            <p style="margin-bottom: 20px; color: #555;">한국십진분류법(KDC)에 따른 주제별 추천 도서를 확인해보세요.</p>
+            <div id="catGrid" class="category-grid">
+                <!-- Javascript will populate grid -->
+            </div>
+        </section>
 
+        <!-- Menu 3: Collection/Grid (배수 스타일 -> 서가형 배치) -->
+        <section id="col" class="content-section">
+            <h2 class="section-title">이달의 인기도서</h2>
+            <p style="margin-bottom: 20px;">친구들이 가장 많이 본 책들을 만나보세요.</p>
+            <div id="bookShelf" class="book-shelf">
+                <!-- Javascript will populate shelf -->
+            </div>
+        </section>
 
-<p>초등교육기관, 중등교육기관에는 학교도서관을 설치하여야 하며(같은 법 제37조), 학교도서관은 초·중등교육법과 사립학교법 및 그 밖의 법률의 규정에 따른 해당학교의 감독청의 지도·감독을 받는다(같은 법 제39조).</p>
+        <!-- Menu 4: My Page / Info (알아서 -> 마이페이지 & 공지) -->
+        <section id="mypage" class="content-section">
+            <h2 class="section-title">나의 도서관 생활</h2>
+            <div class="info-board">
+                <div class="notice-list">
+                    <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">📢 도서관 공지사항</h3>
+                    <div class="notice-item">
+                        <span>[안내] 여름방학 독서 캠프 참가자 모집</span>
+                        <span class="notice-date">2026.01.10</span>
+                    </div>
+                    <div class="notice-item">
+                        <span>[신간] 마법천자문 60권 입고 안내</span>
+                        <span class="notice-date">2026.01.05</span>
+                    </div>
+                    <div class="notice-item">
+                        <span>[휴관] 개교기념일 도서관 휴관 안내</span>
+                        <span class="notice-date">2025.12.28</span>
+                    </div>
+                </div>
+                <div class="my-status">
+                    <h3 style="margin-top:0;">👤 학생 정보</h3>
+                    <p style="text-align: center; margin: 20px 0;"><i class="fa-solid fa-user-graduate"
+                            style="font-size: 3rem; color: #fab1a0;"></i></p>
+                    <div class="status-row">
+                        <span>이름</span>
+                        <strong>김학생</strong>
+                    </div>
+                    <div class="status-row">
+                        <span>대출 가능</span>
+                        <strong style="color: blue;">3권</strong>
+                    </div>
+                    <div class="status-row">
+                        <span>연체 도서</span>
+                        <strong>0권</strong>
+                    </div>
+                    <button
+                        style="width:100%; padding:10px; background:#ff9f43; color:white; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">대출증
+                        보기</button>
+                </div>
+            </div>
+        </section>
 
-  <img src="https://i.namu.wiki/i/-jPeIwz4bo8OOc8f-h1XknSOSVKpZMDbw50A1cY45iVNAGnr0zmhLVgkkDpfdvOn4KEjhlOdCsmgnNdWx8yuTDIv2TzdX1EchRzeFBvIszRy7ZW3xKgUmAqsR2-X4y31j5BbY4cIjeIFr4xP7tN6ww.webp" alt="대체문자열">
+    </main>
 
-<p>학교도서관은 학생 및 교원 등의 교수, 학습활동을 지원하기 위하여 다음 각 호의 업무를 수행한다(같은 법 제38조).</p>
+    <footer>
+        <p>© 2026 행복초등학교 도서관 Happy Elementary School Library</p>
+        <p>문의: 02-1234-5678 | 운영시간: 09:00 ~ 16:30</p>
+    </footer>
 
-<p>학교교육에 필요한 도서관자료의 수집·정리·보존 및 이용서비스 제공</p>
-
-  <table style="width:100%">
-
-    <tr style="background-color:lightgrey">
-
-        <th>국어</th>
-
-        <th>수학</th>      
-
-    </tr>
-
-    <tr>
-
-        <td>화법</td>
-
-        <td>함수</td>
-
-    </tr>
-
-    <tr>
-
-        <td>독서</td>
-
-        <td>방정식</td>
-
-    </tr>
-
-</table>
-  
-<p>학교소장 교육 자료의 통합관리 및 이용 제공</p>
-
-<p>시청각자료 및 멀티미디어 자료의 개발·제작 및 이용 제공</p>
-
-<p>정보관리시스템과 통신망을 이용한 정보공유체제의 구축 및 이용 제공</p>
-
-<p>도서관 이용의 지도 및 독서교육, 협동수업 등을 통한 정보 활용의 교육</p>
-
-<p>그 밖에 학교도서관으로서 해야 할 기능수행에 필요한 업무</p>
-
-
-즉, 학생들을 위한 다양한 도서의 배치와 더불어 교직원들의 수업 및 과제, 아이디어 제공에 필요한 수많은 교과자료의 제공을 중요시한다.
-
-관련 법률로 학교도서관진흥법이 있다.
-
+    <script src="script.js"></script>
 </body>
 
-
- </html>
+</html>
